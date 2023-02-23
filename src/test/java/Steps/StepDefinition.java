@@ -19,13 +19,16 @@ import utils.BrowserManager;
 import utils.QaProps;
 import utils.TestDataReader;
 
+import java.net.SocketOption;
 import java.util.HashMap;
+
 
 public class StepDefinition {
     private WebDriver driver;
+
     HomePage homePage;
     String url;
-    String url1;
+
     HashMap<String, String> data;
     Scenario scenario;
 
@@ -44,12 +47,12 @@ public class StepDefinition {
         url = QaProps.getValue("url");
         driver.get(url);
         // System.out.println(1/0);
-        data = TestDataReader.getData(scenario.getName());
     }
 
     @When("the user enter the product name")
     public void the_user_enter_the_product_name() {
         homePage = new HomePage(driver);
+        data = TestDataReader.getData(scenario.getName());
         homePage.getSearchBox().sendKeys(data.get("TypeValue"));
         homePage.getSearchBox().sendKeys(Keys.ENTER);
         //Thread.sleep(4000);
@@ -94,7 +97,7 @@ public class StepDefinition {
     }
 
     @When("the user click and enter address")
-    public void theUserClickAndEnterAddress()  {
+    public void theUserClickAndEnterAddress() {
         homePage = new HomePage(driver);
         homePage.getSelectAddress().click();
         //Thread.sleep(4000);
@@ -115,29 +118,47 @@ public class StepDefinition {
     }
 
 
-    @Given("the user searches a product")
-    public void theUserSearchesAProduct() {
+    @Given("user navigates to amazon home page")
+    public void userNavigatesToAmazonHomePage() {
         url = QaProps.getValue("url");
         driver.get(url);
-        //data = TestDataReader.getData(scenario.getName());
+        data = TestDataReader.getData(scenario.getName());
+    }
+
+    @When("the user searches the {string}")
+    public void theUserSearchesThe(String arg0) {
         homePage = new HomePage(driver);
-        homePage.getSearchBox().sendKeys("chocolates");
+        homePage.getSearchBox().sendKeys(arg0);
         homePage.getSearchBox().sendKeys(Keys.ENTER);
     }
 
-    @When("the user navigates to the result page")
-    public void theUserNavigatesToTheResultPage() {
-        url1 = QaProps.getValue("url1");
-        driver.get(url1);
-    }
-    @And("the user selects the {string} and {string}")
-    public void theUserSelectsTheAnd(String arg0, String arg1) {
+    @Then("Searched products {string} should be displayed")
+    public void searchedProductsShouldBeDisplayed(String arg0) {
+        String text = homePage.getProduct().getText();
+        Assert.assertTrue(text.contains(arg0));
 
     }
 
-    @Then("selected options should be displayed")
-    public void selectedOptionsShouldBeDisplayed() {
+    @Given("the navigates to result page")
+    public void theNavigatesToResultPage() {
+        url = QaProps.getValue("url");
+        driver.get(url);
+        // System.out.println(1/0);
+        data = TestDataReader.getData(scenario.getName());
+        homePage.getSearchBox().sendKeys(data.get("TypeValue"));
+
+
     }
-
-
+    @When("the user sort the feature")
+    public void theUserSortTheFeature() {
+        Select dropDown = new Select (homePage.getSort());
+       // dropDown.selectByIndex(3);
+       dropDown.selectByVisibleText("Newest Arrivals");
+    }
+    @Then("sorted result should be displayed to user")
+    public void sortedResultShouldBeDisplayedToUser() {
+        data = TestDataReader.getData(scenario.getName());
+        String text = homePage.getSortResult().getText();
+        Assert.assertEquals(text,data.get("Newest Arrivals"));
+    }
 }

@@ -9,9 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
     private WebDriver driver;
-    public HomePage(WebDriver driver){
+
+    public HomePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this );
+        PageFactory.initElements(driver, this);
     }
 
 
@@ -33,13 +34,16 @@ public class HomePage {
     public WebElement getAllCategory() {
         return allCategory;
     }
-    public WebElement getSelectCategory() {
-        return selectCategory;}
 
-    @FindBy(xpath="//div[@class='nav-search-scope nav-sprite']")
+    public WebElement getSelectCategory() {
+        return selectCategory;
+    }
+
+    @FindBy(xpath = "//div[@class='nav-search-scope nav-sprite']")
     WebElement allCategory;
     @FindBy(xpath = "//select[@id=\"searchDropdownBox\"]")
     WebElement selectCategory;
+
     public WebElement getSelectAddress() {
         return selectAddress;
     }
@@ -51,6 +55,7 @@ public class HomePage {
     public WebElement getAddress() {
         return address;
     }
+
     @FindBy(id = "nav-global-location-popover-link")
     WebElement selectAddress;
     @FindBy(id = "GLUXZipUpdateInput")
@@ -59,5 +64,22 @@ public class HomePage {
     WebElement address;
 
 
+    public WebElement getProduct() {
+        return product;
+    }
+    @FindBy(xpath = "//span[@class ='a-color-state a-text-bold']")
+    WebElement product;
+
+    public WebElement getSort() {
+        return sort;
+    }
+    public WebElement getSortResult() {
+        return sortResult;
+    }
+
+    @FindBy(xpath = "//select[@name=\"s\"]")
+    WebElement sort;
+    @FindBy(xpath = "//span[@class=\"a-size-medium-plus a-color-base a-text-normal\"]")
+    WebElement sortResult;
 }
 
