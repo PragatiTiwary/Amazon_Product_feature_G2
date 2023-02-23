@@ -2,7 +2,7 @@
 //public class TestDataReader {
    // "C:\Users\pragtiwa\Downloads\Leaf_Ground.xlsx"
 
- package utils;
+package utils;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,7 +18,9 @@ public class TestDataReader {
    private static XSSFWorkbook workbook = null;
 
    public static void main(String[] args) {
-      init();}
+      init();
+   System.out.println(data);
+   }
 
    private static void init() {
       if (workbook == null) {
@@ -42,14 +44,15 @@ public class TestDataReader {
             if(row != null && row.getCell(0 )!= null) {
                System.out.println(i);
                String key = row.getCell(0).getStringCellValue();
-
+System.out.println(key);
 
                HashMap<String, String> rowData = new HashMap();
+              // System.out.println(rowData);
 
                for (int j = 1; j < row.getLastCellNum(); j++) { //itterative through all column
                   String columnName = sheet.getRow(0).getCell(j).getStringCellValue();
                   if(row.getCell(j)!=null)
-                  rowData.put(columnName, row.getCell(j).getStringCellValue());//in the row data we are putting data
+                     rowData.put(columnName, row.getCell(j).getStringCellValue());//in the row data we are putting data
 
                }
                data.put(key, rowData);
