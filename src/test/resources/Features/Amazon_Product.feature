@@ -9,7 +9,7 @@ Feature: Amazon a product feature.
     Given the user navigates to  Home Page
     When the user select a category
     Then the category should be selected and displayed
-@smoke
+
   Scenario: Verify user is able to enter address
     Given the user goes to the home Page
     When the user click and enter address
